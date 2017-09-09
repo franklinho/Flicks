@@ -21,8 +21,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.nfc.tech.MifareUltralight.PAGE_SIZE;
-
 public class MovieActivity extends AppCompatActivity {
     private static String TAG = "MovieActivity";
     FlicksClient.FlicksService client;
@@ -33,6 +31,7 @@ public class MovieActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     boolean isLoading = false;
     boolean isLastPage = false;
+    private static int PAGE_SIZE = 20;
 
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -47,7 +46,7 @@ public class MovieActivity extends AppCompatActivity {
             int totalItemCount = linearLayoutManager.getItemCount();
             int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
 
-            if (!isLoading && flicksRecyclerViewAdapter.getItemCount() - linearLayoutManager.findLastVisibleItemPosition() < 20) {
+            if (!isLoading && flicksRecyclerViewAdapter.getItemCount() - linearLayoutManager.findLastVisibleItemPosition() < PAGE_SIZE) {
                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                         && firstVisibleItemPosition >= 0
                         && totalItemCount >= PAGE_SIZE) {
